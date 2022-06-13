@@ -1,0 +1,79 @@
+注文システムのテーブル定義
+
+ユーザ：user users table
+id
+name
+created
+modified
+
+商品：product   products
+id
+name
+price
+created
+modified
+
+カート：cart carts table
+id
+user_id     foreign key user_key (user_id) references users(id)
+product_id  foreign key product_key (product_id) references products(id)
+size
+created
+modified
+
+＊cart_listから画面上の注文マークのついた product を抜き出して配列にする
+＊注文するproductの配列を order 処理に渡す
+
+注文：order orders table
+id
+user_id     foreign key user_key (user_id) refereces users(id)
+created
+modified
+
+明細：detail details table
+id
+order_id
+product_id
+size
+created
+modified
+
+
+
+関連：
+２．変更　22-5-10
+
+1.Users <----> Carts
+Users hasMay Carts      carts.user_id 
+Carts belongsTo User
+
+2. Products <----> Carts
+Products hasMany Carts   carts.product_id
+Carts belongsTo Products
+
+3.Users <----> orders
+Users hasMany Orders    orders.user_id
+Orders belongsTo Users
+
+4.Orders
+Orders <----> details
+Orders hasMany Details  details.order_is
+Details belongsTo order
+
+
+-------------------------------
+１．変更以前
+order hasMany details, detail belogsTo orders, detail has details.order_id
+
+detail belongsToMany product, product belongsToMany detail,
+
+joint table for belongsToMany association
+
+結合テーブル    details_products
+id, 
+details_id,
+product_id
+
+
+
+
