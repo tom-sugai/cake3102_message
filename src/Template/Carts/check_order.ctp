@@ -18,7 +18,7 @@
     </ul>
 </nav>
 <div class="carts index large-9 medium-8 columns content">
-    <h3><?= __('注文商品の確認') ?></h3>
+    <h3><?= __('注文する商品の確認') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
