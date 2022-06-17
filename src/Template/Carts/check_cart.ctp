@@ -15,6 +15,7 @@
         <li><?= $this->Html->link(__('New Product'), ['controller' => 'Products', 'action' => 'add']) ?></li>
 -->
         <li><?= $this->Html->link(__('注文を確認する'), ['controller' => 'Carts', 'action' => 'Check_order']) ?></li>
+        <li><?= $this->Html->link(__('商品選択に戻る'), ['controller' => 'Products', 'action' => 'select']) ?></li>
     </ul>
 </nav>
 <div class="carts index large-9 medium-8 columns content">
