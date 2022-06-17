@@ -79,6 +79,19 @@ class CartsController extends AppController
         
     }
 
+    public function delCart($id = null)
+    {
+        $this->request->allowMethod(['post', 'delete']);
+        $cart = $this->Carts->get($id);
+        if ($this->Carts->delete($cart)) {
+            $this->Flash->success(__('The cart has been deleted.'));
+        } else {
+            $this->Flash->error(__('The cart could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'checkCart']);
+    }
+
     public function intoCart($productId = null)
     {
         // get user info from session
