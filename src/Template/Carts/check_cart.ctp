@@ -19,7 +19,7 @@
     </ul>
 </nav>
 <div class="carts index large-9 medium-8 columns content">
-    <h3><?= __('商品を選んで注文してください') ?></h3>
+    <h3><?= __('カートの商品を選んで注文してください') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
