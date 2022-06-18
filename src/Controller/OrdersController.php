@@ -31,7 +31,7 @@ class OrdersController extends AppController
         $userName = $this->Session->read('userName');
         $userId = $this->Session->read('userId');
 
-        $this->Flash->success(__("Here is /Orders/fixOrder ------- " . $userName));
+        //$this->Flash->success(__("Here is /Orders/fixOrder ------- " . $userName));
         $this->paginate = [
             'contain' => ['Users','Products'],
         ];
@@ -59,13 +59,13 @@ class OrdersController extends AppController
         $order->user_id = $userId;
         $order->details = $details;
         $this->set('order',$order);
-        $this->Flash->success(__("Here is /Orders/fixOrder step-2 ------- " . $userName));
+        //$this->Flash->success(__("Here is /Orders/fixOrder step-2 ------- " . $userName));
 
         if ($this->request->is('post')) {
             $order = $this->Orders->patchEntity($order, $this->request->getData());
             // save order record to ordersTable              
             if ($this->Orders->save($order)) {
-                $this->Flash->success(__('The order has been saved.--- /Orders/fixOrder ' . $order->id));
+                //$this->Flash->success(__('The order has been saved.--- /Orders/fixOrder ' . $order->id));
                 // clean carts table( delete orderd cart record from carts table ) 
                 foreach($query as $orderItem){
                     $cartsTable->delete($orderItem);
