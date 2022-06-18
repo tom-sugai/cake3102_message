@@ -7,12 +7,14 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
-
+    <!--
         <li><?= $this->Html->link(__('List Orders'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Details'), ['controller' => 'Details', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Detail'), ['controller' => 'Details', 'action' => 'add']) ?></li>
+    -->
+    <li><?= $this->Html->link(__('注文の確認へ戻る'), ['controller' => 'Carts', 'action' => 'check_order']) ?></li>
     </ul>
 </nav>
 <div class="carts index large-9 medium-8 columns content">
