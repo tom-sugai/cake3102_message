@@ -39,6 +39,10 @@ class CartsController extends AppController
         $query = $this->Carts->find()
             ->where(['user_id' => $userId])
             ->where(['orderd' => true]);
+        if($query->isEmpty()){
+            $this->Flash->error(__('注文する商品を選んでください'));
+            return $this->redirect(['controller' => 'Carts', 'action' => 'check_cart']);
+        }
         $carts = $this->paginate($query);
         $this->set(compact('carts'));
 
