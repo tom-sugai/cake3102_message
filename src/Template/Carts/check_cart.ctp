@@ -25,6 +25,7 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('product_image') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('product_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('size') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
@@ -37,6 +38,7 @@
             <tr>
                 <td><?= $this->Number->format($cart->id) ?></td>
                 <td><?= $cart->has('user') ? $this->Html->link($cart->user->uname, ['controller' => 'Users', 'action' => 'view', $cart->user->id]) : '' ?></td>
+                <td><?= $this->Html->image($cart->product->image, array('height' => 100, 'width' => 100)) ?></td>
                 <td><?= $cart->has('product') ? $this->Html->link($cart->product->pname, ['controller' => 'Products', 'action' => 'view', $cart->product->id]) : '' ?></td>
                 <td><?= $this->Number->format($cart->size) ?></td>
                 <td><?= h($cart->created) ?></td>
