@@ -27,7 +27,7 @@
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('Order Id') ?></th>
-                <th scope="col"><?= __('Product Id') ?></th>
+                <th scope="col"><?= __('Product Name') ?></th>
                 <th scope="col"><?= __('Size') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
@@ -37,7 +37,7 @@
             <tr>
                 <td><?= h($details->id) ?></td>
                 <td><?= h($details->order_id) ?></td>
-                <td><?= h($details->product_id) ?></td>
+                <td><?= h($details->product->pname) ?></td>
                 <td><?= h($details->size) ?></td>
                 <td><?= h($details->created) ?></td>
                 <td><?= h($details->modified) ?></td>
