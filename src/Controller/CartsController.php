@@ -33,17 +33,19 @@ class CartsController extends AppController
         //echo "Here is /Carts/checkOrder ------- " . $userName . "<br/>";    
         $userId = $this->Session->read('userId');
 
-        $this->paginate = [
-            'contain' => ['Users', 'Products'],
-        ];
         $query = $this->Carts->find()
             ->where(['user_id' => $userId])
             ->where(['orderd' => true]);
+        $query->contain(['Users', 'Products']);    
+        //debug($query->toList());
+
         if($query->isEmpty()){
             $this->Flash->error(__('注文する商品を選んでください'));
             return $this->redirect(['controller' => 'Carts', 'action' => 'check_cart']);
         }
+
         $carts = $this->paginate($query);
+        //debug($carts);
         $this->set(compact('carts'));
 
     }
@@ -59,13 +61,9 @@ class CartsController extends AppController
         $query = $this->Carts->find()
             ->where(['user_id' => $userId])
             ->where(['orderd' => false]);
-        /** 
-        if($query->isEmpty()){
-            $this->Flash->error(__('商品を選んでカートに入れてください'));
-            return $this->redirect(['controller' => 'Products', 'action' => 'select']);
-        }
-        */    
+       
         $carts = $this->paginate($query);
+        debug($carts);
         $this->set(compact('carts'));
     }
 
