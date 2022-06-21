@@ -35,8 +35,8 @@
             <?php foreach ($carts as $cart): ?>
             <tr>
                 <td><?= $this->Number->format($cart->id) ?></td>
-                <td><?= $cart->has('user') ? $this->Html->link($cart->user->id, ['controller' => 'Users', 'action' => 'view', $cart->user->id]) : '' ?></td>
-                <td><?= $cart->has('product') ? $this->Html->link($cart->product->id, ['controller' => 'Products', 'action' => 'view', $cart->product->id]) : '' ?></td>
+                <td><?= $cart->has('user') ? $this->Html->link($cart->user->uname, ['controller' => 'Users', 'action' => 'view', $cart->user->id]) : '' ?></td>
+                <td><?= $cart->has('product') ? $this->Html->link($cart->product->pname, ['controller' => 'Products', 'action' => 'view', $cart->product->id]) : '' ?></td>
                 <td><?= $this->Number->format($cart->size) ?></td>
                 <td><?= h($cart->created) ?></td>
                 <td><?= h($cart->modified) ?></td>
