@@ -63,11 +63,7 @@ class CartsController extends AppController
             ->where(['orderd' => false]);
        
         $carts = $this->paginate($query);
-<<<<<<< HEAD
         
-=======
-        //debug($carts);
->>>>>>> 4ea4f8246fdc7d3532992d4268d9278374a1749e
         $this->set(compact('carts'));
     }
 
