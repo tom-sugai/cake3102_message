@@ -18,11 +18,15 @@ class OrdersController extends AppController
         $userName = $this->Session->read('userName');
         $userId = $this->Session->read('userId');
 
+        $this->paginate = [
+            'contain' => ['Users', 'Details.Products'],
+        ];
+
         $order = $this->Orders->get($id, [
             'contain' => ['Users', 'Details.Products'],
         ]);
-
-        $this->set('order', $order);
+        //debug($order);
+        $this->set(compact('order'));
             
     }
 
@@ -30,19 +34,17 @@ class OrdersController extends AppController
         //$this->autoRender = false;
         $userName = $this->Session->read('userName');
         $userId = $this->Session->read('userId');
-
-        //$this->Flash->success(__("Here is /Orders/fixOrder ------- " . $userName));
+         
         $this->paginate = [
             'contain' => ['Users','Products'],
         ];
-         
+        
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $query = $cartsTable->find()
             ->where(['user_id' => $userId])
             ->where(['orderd' => true]);
-
+        $query->contain(['Users', 'Products']);
         $carts = $this->paginate($query);
-        //$this->set('carts',$carts);
         $this->set(compact('carts'));
 
         // step1 check orderItem and make detail entity list
