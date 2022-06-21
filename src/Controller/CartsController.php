@@ -22,7 +22,7 @@ class CartsController extends AppController
         // save cart record to cartsTable
         if ($this->Carts->save($cart)) {    
             //$this->Flash->success(__('Here is /Carts/order --- cartId : ' . $cartId . 'was saved.'));
-            return $this->redirect(['controller' => 'Carts', 'action' => 'check_order']); 
+            return $this->redirect(['controller' => 'Carts', 'action' => 'check_cart']); 
             //$this->setAction('check');
         }
         $this->Flash->error(__('The cart could not be saved. Please, try again.'));
