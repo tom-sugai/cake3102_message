@@ -27,6 +27,7 @@
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('Order Id') ?></th>
+                <th scope="col"><?= __('Product image') ?></th>
                 <th scope="col"><?= __('Product Name') ?></th>
                 <th scope="col"><?= __('Size') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
@@ -37,6 +38,7 @@
             <tr>
                 <td><?= h($details->id) ?></td>
                 <td><?= h($details->order_id) ?></td>
+                <td><?= $this->Html->image($details->product->image, array('height' => 100, 'width' => 100)) ?></td>
                 <td><?= h($details->product->pname) ?></td>
                 <td><?= h($details->size) ?></td>
                 <td><?= h($details->created) ?></td>
@@ -58,7 +60,7 @@
         <table class="vertical-table">
             <tr>
                 <th scope="row"><?= __('User') ?></th>
-                <td><?= $order->has('user') ? $this->Html->link($order->user->id, ['controller' => 'Users', 'action' => 'view', $order->user->id]) : '' ?></td>
+                <td><?= $order->has('user') ? $this->Html->link($order->user->uname, ['controller' => 'Users', 'action' => 'view', $order->user->id]) : '' ?></td>
             </tr>
             <tr>
                 <th scope="row"><?= __('Note1') ?></th>
@@ -69,7 +71,7 @@
                 <td><?= h($order->note2) ?></td>
             </tr>
             <tr>
-                <th scope="row"><?= __('Id') ?></th>
+                <th scope="row"><?= __('Order-Id') ?></th>
                 <td><?= $this->Number->format($order->id) ?></td>
             </tr>
             <tr>
