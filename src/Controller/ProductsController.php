@@ -33,7 +33,7 @@ class ProductsController extends AppController
         $this->Session->write('productId', $product->id);
         $this->Session->write('productName', $product->pname);
         //$this->Flash->success(__('Your sellected product is   ' . $product->pname));
-        $userName = $this->Session->read('userName');
+        $userName = $this->Session ->read('userName');
         //$this->Flash->success(__('Your namet is ---  ' . $userName));
         return $this->redirect(['controller' => 'Carts', 'action' => 'intoCart', $product->id]);
         $this->setAction('select');
