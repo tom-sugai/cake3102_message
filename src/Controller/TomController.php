@@ -1,6 +1,6 @@
 use Cake\Mailer\Email;
 
-class MailController extends AppController 
+class TomController extends AppController 
 {
     Email::configTransport('gmail_ssl', [
         ]);
