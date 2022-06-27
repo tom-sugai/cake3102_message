@@ -1,14 +1,20 @@
+<?php
+namespace App\Controller;
+
+use App\Controller\AppController;
 use Cake\Mailer\Email;
 
 class SmailController extends AppController 
+
 {
-    Email::configTransport('gmail_ssl', [
+    public function index(){
+        $this->autoRender = false;
+        Email::configTransport('gmail_ssl', [
+        'className' => 'Smtp'  
         ]);
 
-    public function index(){
-    $this->autoRender = false;
-    echo "Here is EmailController";
+        echo "Here is EmailController";
     
     }
-
 }
+?>
