@@ -34,11 +34,16 @@ class SmailController extends AppController
         // set transport for debug
         $transport = new DebugTransport();
         $email->setTransport($transport);
-        $result = $email->from(['me@example.com' => 'My Site'])
-            ->to('you@example.com')
-            ->subject('About')
-            ->send('My message');
-            
+        $result = $email->setFrom(['me@example.com' => 'My Site'])
+            ->setTo('you@example.com')
+            ->addTo('fumiko@example.com', 'Junji Example')
+            ->setCc('seiichi@example.com')
+            ->addCc('keito@example.com')
+            ->setBcc('yumi@example.com')
+            ->addBcc('keiko@example.com')
+            ->setSubject('About')
+            ->send('Hello Everybody !!');
+
         debug($result);
     }
 }
