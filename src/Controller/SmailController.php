@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Mailer\Email;
+use Cake\Mailer\Transport\DebugTransport;
+
 
 class SmailController extends AppController 
 
