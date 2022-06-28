@@ -48,7 +48,7 @@ class SmailController extends AppController
         debug($result);
         */
         $result = $email
-            ->template('default', 'default')
+            ->template('default', 'default') // 'view template' 'layout template'
             ->emailFormat('html')
             ->to('bob@example.com')
             ->from('app@domain.com')
