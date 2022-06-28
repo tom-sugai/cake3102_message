@@ -29,6 +29,8 @@ class SmailController extends AppController
         ]);
         */
 
+        // create email instans
+        $email = new Email();
         // set transport for debug
         $transport = new DebugTransport();
         $email->setTransport($transport);
@@ -36,6 +38,7 @@ class SmailController extends AppController
             ->to('you@example.com')
             ->subject('About')
             ->send('My message');
+            
         debug($result);
     }
 }
