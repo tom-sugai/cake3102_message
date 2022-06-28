@@ -48,13 +48,13 @@ class SmailController extends AppController
         debug($result);
         */
         $result = $email
-            ->template('welcome', 'fancy')
+            ->template('default', 'default')
             ->emailFormat('html')
             ->to('bob@example.com')
             ->from('app@domain.com')
             ->send();
         debug($result);
-        
+
     }
 }
 ?>
