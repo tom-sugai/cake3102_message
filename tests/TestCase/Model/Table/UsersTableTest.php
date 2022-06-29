@@ -71,4 +71,14 @@ class UsersTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
+
+    /** find User test */
+    public function testUsersTableFind(){
+        $result = $this->UsersTable->find('all')->first();
+        $this->assertFalse(empty($result));
+        $this->assertTrue(is_a($result,'App\Model\Entity\User'));
+        $this->assertEquals($result->id,1);
+        $this->assertStringWith('tom',$result->uname);
+        
+    }
 }
