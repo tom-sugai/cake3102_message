@@ -46,7 +46,7 @@ class UserTest extends TestCase
      */
     public function testInitialization()
     {
- 
+        //$this->markTestIncomplete('Not implemented yet.');
     }
 
     /** $this->User test */
