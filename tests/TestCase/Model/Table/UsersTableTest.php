@@ -15,7 +15,7 @@ class UsersTableTest extends TestCase
      *
      * @var \App\Model\Table\UsersTable
      */
-    public $Users;
+    public $UsersTable;
 
     /**
      * Fixtures
@@ -59,7 +59,7 @@ class UsersTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        //$this->markTestIncomplete('Not implemented yet.');
     }
 
     /**
@@ -78,7 +78,7 @@ class UsersTableTest extends TestCase
         $this->assertFalse(empty($result));
         $this->assertTrue(is_a($result,'App\Model\Entity\User'));
         $this->assertEquals($result->id,1);
-        $this->assertStringWith('tom',$result->uname);
-        
+        $this->assertStringStartsWith('tom',$result->uname);
+
     }
 }
