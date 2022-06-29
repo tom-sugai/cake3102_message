@@ -50,7 +50,7 @@ class UserTest extends TestCase
     }
 
     /** $this->User test */
-    public function testUserInstance(){
-        $this->asserTrue(is_a($this->User,'App/Model/Entity/User'));
+    public function testUserInstance() {
+        $this->assertTrue(is_a($this->User,'App\Model\Entity\User'));
     }
 }
