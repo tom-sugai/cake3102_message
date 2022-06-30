@@ -9,7 +9,9 @@ class ProgressHelperTest extends TestCase
 {
     public function setUp()
     {
-    
+        parent::setUp();
+        $view = new View();
+        $this->Progress = new ProgressHelper($view);
     }
 
     public function testBar()
