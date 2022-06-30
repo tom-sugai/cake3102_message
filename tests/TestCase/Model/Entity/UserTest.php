@@ -46,6 +46,11 @@ class UserTest extends TestCase
      */
     public function testInitialization()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+    
+    }
+
+    /** $this->User test */
+    public function testUserInstance() {
+        $this->assertTrue(is_a($this->User,'App\Model\Entity\User'));
     }
 }
