@@ -11,7 +11,7 @@ class ProgressHelper extends Helper
         return sprintf(
             '<div class="progress-container">
                 <div class="progress-bar" style="width: %s%%"></div>
-            </div>', $width);    
-        )
+            </div>', $width);
+
     }
 }
