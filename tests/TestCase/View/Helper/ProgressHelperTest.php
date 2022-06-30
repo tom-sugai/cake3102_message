@@ -24,3 +24,4 @@ class ProgressHelperTest extends TestCase
         $this->assertContains('width: 33%', $result);
     }
 }
+?>
