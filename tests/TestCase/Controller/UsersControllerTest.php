@@ -32,7 +32,10 @@ class UsersControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        //$this->markTestIncomplete('Not implemented yet.');
+        $this->get('/users');
+
+        $this->assertResponseOk();
     }
 
     /**
