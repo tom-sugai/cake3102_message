@@ -65,7 +65,6 @@ class UsersControllerTest extends TestCase
         $this->cookie('csrfToken', $token);
 
         $data = [
-            //'id' => 1,
             'uname' => 'ai',
             '_csrfToken' => $token
         ];
@@ -74,8 +73,10 @@ class UsersControllerTest extends TestCase
         $this->assertResponseSuccess();
         $users = TableRegistry::getTableLocator()->get('Users');
         $query = $users->find()->where(['uname' => $data['uname']]);
-        $this->assertEquals(1, $query->count());
-    }
+        //debug($query);
+        //debug($query->count());
+        $this->assertEquals(1, $query->count()); // $query->count() -> do'nt exist : 1  already exist : 2 in fixture
+    } 
 
     /**
      * Test edit method
