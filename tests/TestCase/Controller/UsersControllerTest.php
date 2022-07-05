@@ -60,6 +60,7 @@ class UsersControllerTest extends TestCase
     public function testAdd()
     {
         //$this->markTestIncomplete('Not implemented yet.');
+        // add my-csrf-token
         $token = 'my-csrf-token';
         $this->cookie('csrfToken', $token);
 
