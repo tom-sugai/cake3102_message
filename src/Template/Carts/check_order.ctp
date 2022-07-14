@@ -45,7 +45,7 @@
                 <td><?= h($cart->modified) ?></td>
                 <td class="actions">
                 <!--    <?= $this->Html->link(__('View'), ['action' => 'view', $cart->id]) ?> -->
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $cart->id]) ?>
+                <!--    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $cart->id]) ?> -->
                     <?= $this->Form->postLink(__('カートへ戻す'), ['action' => 'back_cart', $cart->id]) ?>
                 <!--    <?= $this->Html->link(__('注文'), ['action' => 'order', $cart->id]) ?> -->
                 </td>
