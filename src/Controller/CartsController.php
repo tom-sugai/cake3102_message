@@ -189,7 +189,7 @@ class CartsController extends AppController
             if ($this->Carts->save($cart)) {
                 $this->Flash->success(__('The cart has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'checkCart']);
             }
             $this->Flash->error(__('The cart could not be saved. Please, try again.'));
         }
