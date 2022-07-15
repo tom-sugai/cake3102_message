@@ -21,6 +21,7 @@ class UsersFixture extends TestFixture
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'email' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'password' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'role' => ['type' => 'string', 'length' => 20, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -41,10 +42,11 @@ class UsersFixture extends TestFixture
             [
                 'id' => 1,
                 'uname' => 'Lorem ipsum dolor sit amet',
-                'created' => '2022-07-15 05:12:33',
-                'modified' => '2022-07-15 05:12:33',
+                'created' => '2022-07-15 05:36:01',
+                'modified' => '2022-07-15 05:36:01',
                 'email' => 'Lorem ipsum dolor sit amet',
                 'password' => 'Lorem ipsum dolor sit amet',
+                'role' => 'Lorem ipsum dolor ',
             ],
         ];
         parent::init();

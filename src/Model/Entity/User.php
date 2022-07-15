@@ -12,6 +12,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $modified
  * @property string $email
  * @property string $password
+ * @property string $role
  *
  * @property \App\Model\Entity\Cart[] $carts
  * @property \App\Model\Entity\Order[] $orders
@@ -33,6 +34,7 @@ class User extends Entity
         'modified' => true,
         'email' => true,
         'password' => true,
+        'role' => true,
         'carts' => true,
         'orders' => true,
     ];
