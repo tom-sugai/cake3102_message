@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  * @property string $email
+ * @property string $password
  *
  * @property \App\Model\Entity\Cart[] $carts
  * @property \App\Model\Entity\Order[] $orders
@@ -31,7 +32,17 @@ class User extends Entity
         'created' => true,
         'modified' => true,
         'email' => true,
+        'password' => true,
         'carts' => true,
         'orders' => true,
+    ];
+
+    /**
+     * Fields that are excluded from JSON versions of the entity.
+     *
+     * @var array
+     */
+    protected $_hidden = [
+        'password',
     ];
 }
