@@ -25,6 +25,10 @@
             <td><?= h($user->uname) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Email') ?></th>
+            <td><?= h($user->email) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($user->id) ?></td>
         </tr>
@@ -46,6 +50,7 @@
                 <th scope="col"><?= __('User Id') ?></th>
                 <th scope="col"><?= __('Product Id') ?></th>
                 <th scope="col"><?= __('Size') ?></th>
+                <th scope="col"><?= __('Orderd') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -56,6 +61,7 @@
                 <td><?= h($carts->user_id) ?></td>
                 <td><?= h($carts->product_id) ?></td>
                 <td><?= h($carts->size) ?></td>
+                <td><?= h($carts->orderd) ?></td>
                 <td><?= h($carts->created) ?></td>
                 <td><?= h($carts->modified) ?></td>
                 <td class="actions">

@@ -59,7 +59,7 @@ class UsersTableTest extends TestCase
      */
     public function testInitialize()
     {
-        //$this->markTestIncomplete('Not implemented yet.');
+        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**
@@ -69,18 +69,16 @@ class UsersTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        //$this->markTestIncomplete('Not implemented yet.');
+        $this->markTestIncomplete('Not implemented yet.');
     }
 
-    /** find User test */
-    public function testFindUser()
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
-        $result = $this->Users->find('all')->first();
-        debug($result);
-        $this->assertInstanceOf('App\Model\Entity\User', $result);
-        $this->assertFalse(empty($result));
-        $this->assertEquals(1,$result->id);
-        $this->assertEquals('tom',$result->uname);
-
+        $this->markTestIncomplete('Not implemented yet.');
     }
 }

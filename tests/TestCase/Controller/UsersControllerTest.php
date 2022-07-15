@@ -4,7 +4,6 @@ namespace App\Test\TestCase\Controller;
 use App\Controller\UsersController;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
-use Cake\ORM\TableRegistry;
 
 /**
  * App\Controller\UsersController Test Case
@@ -33,10 +32,7 @@ class UsersControllerTest extends TestCase
      */
     public function testIndex()
     {
-        //$this->markTestIncomplete('Not implemented yet.');
-        $this->get('/users');
-        $this->assertResponseOk();
-        // add other assert
+        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**
@@ -46,10 +42,7 @@ class UsersControllerTest extends TestCase
      */
     public function testView()
     {
-        //$this->markTestIncomplete('Not implemented yet.');
-        $this->get('/users?page=1');
-        $this->assertResponseOk();
-        // 他のアサート
+        $this->markTestIncomplete('Not implemented yet.');
     }
 
     /**
@@ -59,27 +52,8 @@ class UsersControllerTest extends TestCase
      */
     public function testAdd()
     {
-        //$this->markTestIncomplete('Not implemented yet.');
-
-        /** add my-csrf-token
-        //$token = 'my-csrf-token';
-        //$this->cookie('csrfToken', $token);
-        */ 
-        $this->enableCsrfToken();
-        
-        $data = [
-            'uname' => 'ai',
-            //'_csrfToken' => $token
-        ];
-        $this->post('/users/add', $data);
-
-        $this->assertResponseSuccess();
-        $users = TableRegistry::getTableLocator()->get('Users');
-        $query = $users->find()->where(['uname' => $data['uname']]);
-        //debug($query);
-        //debug($query->count());
-        $this->assertEquals(1, $query->count()); // $query->count() -> do'nt exist : 1  already exist : 2 in fixture
-    } 
+        $this->markTestIncomplete('Not implemented yet.');
+    }
 
     /**
      * Test edit method

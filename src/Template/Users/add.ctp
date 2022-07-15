@@ -20,6 +20,7 @@
         <legend><?= __('Add User') ?></legend>
         <?php
             echo $this->Form->control('uname');
+            echo $this->Form->control('email');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

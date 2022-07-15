@@ -12,24 +12,6 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
-    public function confirm(){
-
-        $user = $this->Users->newEntity();
-        $this->set('user', $user);
-        if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());    
-            $dbuser = $this->Users->findByUname($user->uname)->first();
-            if (!empty($dbuser)) {
-                //$this->Flash->success(__('You are member. Your id is ' . $dbuser->id));
-                //$this->Flash->success(__('You are member. Your name is ' . $dbuser->uname));
-                $this->Session->write('userId',$dbuser->id);
-                $this->Session->write('userName',$dbuser->uname);
-                return $this->redirect(['controller' => 'Products', 'action' => 'select']);
-            }
-            $this->Flash->error(__('You are not member.'));
-            
-        }    
-    }
     /**
      * Index method
      *
