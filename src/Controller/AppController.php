@@ -47,7 +47,7 @@ class AppController extends Controller
         
         $this->loadComponent('Flash');
 
-        $this->Session = $this->request->session();
+        $this->Session = $this->request->getSession();
 
         /*
          * Enable the following component for recommended CakePHP security settings.
