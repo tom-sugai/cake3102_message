@@ -35,7 +35,7 @@ class CartsController extends AppController
 
         $query = $this->Carts->find()
             ->where(['user_id' => $userId])
-            ->where(['orderd' => true]);
+            ->where(['orderd' => 1]);
         $query->contain(['Users', 'Products']);    
         //debug($query->toList());
 
@@ -54,14 +54,14 @@ class CartsController extends AppController
         //$this->autoRender = false;
         //echo "Here is /Carts/check ------- " . $userName . "<br/>";
         $userId = $this->Session->read('userId');
-
+        //debug($userId);
         $this->paginate = [
             'contain' => ['Users', 'Products'],
         ];
         $query = $this->Carts->find()
             ->where(['user_id' => $userId])
-            ->where(['orderd' => false]);
-       
+            ->where(['orderd' => 0]);
+        //debug($query);
         $carts = $this->paginate($query);
         
         $this->set(compact('carts'));
@@ -112,7 +112,7 @@ class CartsController extends AppController
         $cart->size = 1;
         // save cart record to cartsTable
         if ($this->Carts->save($cart)) {    
-            //$this->Flash->success(__('Here is /Carts/save --- productName : ' . $this->Session->read('productName') . 'was saved.')); 
+            $this->Flash->success(__('Here is /Carts/save --- productName : ' . $this->Session->read('productName') . 'was saved.')); 
             return $this->redirect(['controller' => 'Products', 'action' => 'select']);
         }
         $this->Flash->error(__('The cart could not be saved. Please, try again.'));
