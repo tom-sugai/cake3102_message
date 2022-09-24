@@ -42,7 +42,7 @@ class OrdersController extends AppController
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $query = $cartsTable->find()
             ->where(['user_id' => $userId])
-            ->where(['orderd' => true]);
+            ->where(['orderd' => 1]);
         $query->contain(['Users', 'Products']);
         $carts = $this->paginate($query);
         $this->set(compact('carts'));
