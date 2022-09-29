@@ -13,10 +13,19 @@ use Cake\ORM\TableRegistry;
  */
 class ProductsController extends AppController
 {
-    public function check(){
-        $this->autoRender = false;
-        $userName = $this->Session->read('userName');
-        echo "Here is /Products/check ------- " . $userName . "<br/>";
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->allow(['index']);       
+    }
+
+    public function isAuthorized($user)
+    {
+        $action = $this->request->getParam('action');
+        // add および tags アクションは、常にログインしているユーザーに許可されます。
+        if (in_array($action, ['select', 'intoCart', 'check', 'index'])) {
+            return true;
+        }
     }
 
     public function select() 
@@ -35,10 +44,16 @@ class ProductsController extends AppController
         //$this->Flash->success(__('Your sellected product is   ' . $product->pname));
         $userName = $this->Session ->read('userName');
         //$this->Flash->success(__('Your namet is ---  ' . $userName));
-        return $this->redirect(['controller' => 'Carts', 'action' => 'intoCart', $product->id]);
+        return $this->redirect(['controller' => 'Carts', 'action' => 'into_cart', $product->id]);
         $this->setAction('select');
-    
     }
+
+    public function check(){
+        $this->autoRender = false;
+        $userName = $this->Session->read('userName');
+        echo "Here is /Products/check ------- " . $userName . "<br/>";
+    }
+
 
     /**
      * Index method
