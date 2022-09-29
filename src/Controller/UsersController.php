@@ -30,6 +30,26 @@ class UsersController extends AppController
             
         }    
     }
+
+    public function login()
+    {
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl('/products/select'));
+            }
+            $this->Flash->error('ユーザー名またはパスワードが不正です。');
+        }
+    }
+
+    public function logout()
+    {
+        $this->Auth->logout();
+        $this->Flash->success('ログアウトしました。');
+        return $this->redirect($this->Auth->redirectUrl('/products'));
+    }
+
     /**
      * Index method
      *
