@@ -32,9 +32,10 @@ class OrdersController extends AppController
 
     public function fixOrder(){
         //$this->autoRender = false;
-        $userName = $this->Session->read('userName');
-        $userId = $this->Session->read('userId');
-         
+        //$userName = $this->Session->read('userName');
+        //$userId = $this->Session->read('userId');
+        $userId = $this->Auth->user('id');
+        $userName = $this->Auth->user('uname');
         $this->paginate = [
             'contain' => ['Users','Products'],
         ];
