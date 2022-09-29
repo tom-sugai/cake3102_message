@@ -26,6 +26,16 @@ class UsersControllerTest extends TestCase
     ];
 
     /**
+     * Test confirm method
+     *
+     * @return void
+     */
+    public function testConfirm()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
      * Test index method
      *
      * @return void
