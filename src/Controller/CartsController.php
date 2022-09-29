@@ -31,8 +31,8 @@ class CartsController extends AppController
     public function checkOrder(){
         //$this->autoRender = false;
         //echo "Here is /Carts/checkOrder ------- " . $userName . "<br/>";    
-        $userId = $this->Session->read('userId');
-
+        //$userId = $this->Session->read('userId');
+        $userId = $this->Auth->user('id');
         $query = $this->Carts->find()
             ->where(['user_id' => $userId])
             ->where(['orderd' => 1]);
@@ -53,7 +53,8 @@ class CartsController extends AppController
     public function checkCart(){
         //$this->autoRender = false;
         //echo "Here is /Carts/check ------- " . $userName . "<br/>";
-        $userId = $this->Session->read('userId');
+        //$userId = $this->Session->read('userId');
+        $userId = $this->Auth->user('id');
         //debug($userId);
         $this->paginate = [
             'contain' => ['Users', 'Products'],
@@ -70,8 +71,10 @@ class CartsController extends AppController
     public function order($cartId = null){
          
         $this->autoRender = false;
-        $userId = $this->Session->read('userId');
-        $userName = $this->Session->read('userName');
+        //$userId = $this->Session->read('userId');
+        $userId = $this->Auth->user('id');
+        //$userName = $this->Session->read('userName');
+        $userName = $this->Auth->user('uname');
         echo "Here is /Carts/order ------- " . $userName . "<br/>";
        $cart = $this->Carts->get($cartId);
          $cart->orderd = 1;
@@ -103,15 +106,21 @@ class CartsController extends AppController
     {
         // get user info from session
         $this->autoRender =false;
-        $userId = $this->Session->read('userId');
-        $userName = $this->Session->read('userName');
+        //$userId = $this->Session->read('userId');
+        $userId = $this->Auth->user('id');
+        //$userName = $this->Session->read('userName');
+        $userName = $this->Auth->user('uname');
         // create cart record 
         $cart = $this->Carts->newEntity();
         $cart->user_id = $userId;
         $cart->product_id = $productId;
         $cart->size = 1;
+        echo "here is /carts/intoCart" . "<br/>";
+        echo "user_id: $cart->user_id" . "<br/>";
+        echo "product_id: $cart->product_id" . "<br/>";
+        echo "size: $cart->size" . "<br/>";
         // save cart record to cartsTable
-        if ($this->Carts->save($cart)) {    
+        if ($this->Carts->save($cart)) {
             $this->Flash->success(__('Here is /Carts/save --- productName : ' . $this->Session->read('productName') . 'was saved.')); 
             return $this->redirect(['controller' => 'Products', 'action' => 'select']);
         }
