@@ -43,7 +43,6 @@
                 <td><?= h($product->modified) ?></td>
                 <td class="actions">
                     <?= $this->Html->link('カートに入れる', ['controller'=> 'Products', 'action' => 'into_cart', $product->id]) ?>
-
                 </td>
             </tr>
             <?php endforeach; ?>
