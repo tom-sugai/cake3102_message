@@ -13,33 +13,37 @@ use Cake\ORM\TableRegistry;
  */
 class OrdersController extends AppController
 {
-    public function confirm($id = null){
-        //$this->autoRender = false;
-        $userName = $this->Session->read('userName');
-        $userId = $this->Session->read('userId');
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->allow(['index']);       
+    }
 
+    public function isAuthorized($user)
+    {
+        $action = $this->request->getParam('action');
+        // intoCart および checkCart アクションは、常にログインしているユーザーに許可されます。
+        if (in_array($action, ['fixOrder', 'confirm'])) {
+            return true;
+        }
+    }
+
+    public function confirm($id = null){
         $this->paginate = [
             'contain' => ['Users', 'Details.Products'],
         ];
-
         $order = $this->Orders->get($id, [
             'contain' => ['Users', 'Details.Products'],
         ]);
-        //debug($order);
-        $this->set(compact('order'));
-            
+        $this->set(compact('order'));        
     }
 
     public function fixOrder(){
-        //$this->autoRender = false;
-        //$userName = $this->Session->read('userName');
-        //$userId = $this->Session->read('userId');
         $userId = $this->Auth->user('id');
-        $userName = $this->Auth->user('uname');
+        //$userName = $this->Auth->user('uname');
         $this->paginate = [
             'contain' => ['Users','Products'],
         ];
-        
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $query = $cartsTable->find()
             ->where(['user_id' => $userId])
@@ -52,23 +56,20 @@ class OrdersController extends AppController
         $details = [];
         foreach($query as $orderItem){
             $detail = $this->Orders->Details->newEntity();
-            //$detail->user_id = $orderItem->user_id;
             $detail->product_id = $orderItem->product_id;
             $detail->size = $orderItem->size;
             $details[] = $detail;
         }
-        // step2 save order
+
+        // step2 save order with details
         $order = $this->Orders->newEntity();
         $order->user_id = $userId;
         $order->details = $details;
-        $this->set('order',$order);
-        //$this->Flash->success(__("Here is /Orders/fixOrder step-2 ------- " . $userName));
-
+        $this->set('order',$order);;
         if ($this->request->is('post')) {
             $order = $this->Orders->patchEntity($order, $this->request->getData());
             // save order record to ordersTable              
-            if ($this->Orders->save($order)) {
-                //$this->Flash->success(__('The order has been saved.--- /Orders/fixOrder ' . $order->id));
+            if ($this->Orders->save($order)) {;
                 // clean carts table( delete orderd cart record from carts table ) 
                 foreach($query as $orderItem){
                     $cartsTable->delete($orderItem);
