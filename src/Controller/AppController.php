@@ -62,13 +62,18 @@ class AppController extends Controller
                 'controller' => 'Users',
                 'action' => 'login'
             ],
+            // ログアウト後のリダイレクト先(コントローラーとアクション)
+            'logoutRedirect' => [
+                'controller' => 'Products',
+                'action' => 'select'
+            ],
             // 未認証の場合、直前のページに戻します
             'unauthorizedRedirect' => $this->referer()
         ]);
 
         // display アクションを許可して、PagesController が引き続き
         // 動作するようにします。また、読み取り専用のアクションを有効にします。
-        $this->Auth->allow(['display', 'index']);
+        $this->Auth->allow(['display', 'select']);
         
         /*
          * Enable the following component for recommended CakePHP security settings.
