@@ -12,22 +12,46 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
-    public function confirm(){
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->allow(['check', 'confirm']);       
+    }
 
+    public function isAuthorized($user)
+    {
+        // 管理者はすべての操作にアクセスできます
+        if (isset($user['role']) && $user['role'] === 'admin') {
+            return true;
+        }
+        // 管理者以外
+        $action = $this->request->getParam('action');
+        // intoCart および tags アクションは、常にログインしているユーザーに許可されます。
+        if (in_array($action, ['logout'])) {
+            return true;
+        }
+    }
+
+    public function check(){
+        $this->autoRender = false;
+        $userEmail = $this->Auth->user('email');
+        $userRole = $this->Auth->user('role');
+        echo "Here is /Products/check ---- Email :  " . $userEmail . "<br/>";
+        echo "Here is /Products/check ---- Role : " . $userRole . "<br/>";
+    }
+
+    public function confirm(){
         $user = $this->Users->newEntity();
         $this->set('user', $user);
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());    
+            $user = $this->Users->patchEntity($user, $this->request->getData()); 
+            //debug($usr->uname);   
             $dbuser = $this->Users->findByUname($user->uname)->first();
+            //debug($dbuser);
             if (!empty($dbuser)) {
-                //$this->Flash->success(__('You are member. Your id is ' . $dbuser->id));
-                //$this->Flash->success(__('You are member. Your name is ' . $dbuser->uname));
-                $this->Session->write('userId',$dbuser->id);
-                $this->Session->write('userName',$dbuser->uname);
                 return $this->redirect(['controller' => 'Products', 'action' => 'select']);
             }
-            $this->Flash->error(__('You are not member.'));
-            
+            $this->Flash->error(__('You are not member.'));    
         }    
     }
 
@@ -45,9 +69,9 @@ class UsersController extends AppController
 
     public function logout()
     {
-        $this->Auth->logout();
+        //$this->Auth->logout();
         $this->Flash->success('ログアウトしました。');
-        return $this->redirect($this->Auth->redirectUrl('/products'));
+        return $this->redirect($this->Auth->logout());
     }
 
     /**
