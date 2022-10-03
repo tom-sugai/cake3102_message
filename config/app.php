@@ -100,6 +100,7 @@ return [
             'className' => FileEngine::class,
             'path' => CACHE,
             'url' => env('CACHE_DEFAULT_URL', null),
+            //'mask' => 777,
         ],
 
         /*
@@ -115,6 +116,7 @@ return [
             'serialize' => true,
             'duration' => '+1 years',
             'url' => env('CACHE_CAKECORE_URL', null),
+            //'mask' => 777,
         ],
 
         /*
@@ -130,6 +132,7 @@ return [
             'serialize' => true,
             'duration' => '+1 years',
             'url' => env('CACHE_CAKEMODEL_URL', null),
+            //'mask' => 777,
         ],
 
         /*
