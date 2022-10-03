@@ -16,14 +16,19 @@ class ProductsController extends AppController
     public function initialize()
     {
         parent::initialize();
-        $this->Auth->allow(['index']);       
+        $this->Auth->allow(['index','select']);       
     }
 
     public function isAuthorized($user)
     {
+        // 管理者はすべての操作にアクセスできます
+        if (isset($user['role']) && $user['role'] === 'admin') {
+            return true;
+        }
+        // 管理者以外
         $action = $this->request->getParam('action');
-        // add および tags アクションは、常にログインしているユーザーに許可されます。
-        if (in_array($action, ['select', 'intoCart', 'check', 'index'])) {
+        // intoCart および tags アクションは、常にログインしているユーザーに許可されます。
+        if (in_array($action, ['check'])) {
             return true;
         }
     }
@@ -36,24 +41,13 @@ class ProductsController extends AppController
         $this->set(compact('products'));
     }
 
-    public function intoCart ($id = null) 
-    {
-        $product = $this->Products->get($id);
-        $this->Session->write('productId', $product->id);
-        $this->Session->write('productName', $product->pname);
-        //$this->Flash->success(__('Your sellected product is   ' . $product->pname));
-        $userName = $this->Session ->read('userName');
-        //$this->Flash->success(__('Your namet is ---  ' . $userName));
-        return $this->redirect(['controller' => 'Carts', 'action' => 'into_cart', $product->id]);
-        $this->setAction('select');
-    }
-
     public function check(){
         $this->autoRender = false;
-        $userName = $this->Session->read('userName');
-        echo "Here is /Products/check ------- " . $userName . "<br/>";
+        $userEmail = $this->Auth->user('email');
+        $userRole = $this->Auth->user('role');
+        echo "Here is /Products/check ---- Email :  " . $userEmail . "<br/>";
+        echo "Here is /Products/check ---- Role : " . $userRole . "<br/>";
     }
-
 
     /**
      * Index method
@@ -79,7 +73,6 @@ class ProductsController extends AppController
         $product = $this->Products->get($id, [
             'contain' => ['Carts', 'Details'],
         ]);
-
         $this->set('product', $product);
     }
 
