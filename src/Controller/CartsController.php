@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Carts Controller
@@ -12,81 +13,51 @@ use App\Controller\AppController;
  */
 class CartsController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Auth->allow(['index']);       
+    }
+
+    public function isAuthorized($user)
+    {
+        // 管理者はすべての操作にアクセスできます
+        if (isset($user['role']) && $user['role'] === 'admin') {
+            return true;
+        }
+        // 管理者以外
+        $action = $this->request->getParam('action');
+        // intoCart および checkCart アクションは、常にログインしているユーザーに許可されます。
+        if (in_array($action, ['intoCart', 'checkCart', 'order', 'delCart','checkOrder', 'backCart'])) {
+            return true;
+        }
+    }
+
     public function backCart($cartId = null){
         $this->autoRender = false;
-        $userName = $this->Session->read('userName');
-        $userId = $this->Session->read('userId');
-        echo "Here is /Carts/backCart ------- " . $userName . "<br/>";    
         $cart = $this->Carts->get($cartId);
         $cart->orderd = 0;
         // save cart record to cartsTable
         if ($this->Carts->save($cart)) {    
-            //$this->Flash->success(__('Here is /Carts/order --- cartId : ' . $cartId . 'was saved.'));
+            $this->Flash->success(__('Here is /Carts/order --- cartId : ' . $cartId . 'was saved.'));
             return $this->redirect(['controller' => 'Carts', 'action' => 'check_cart']); 
-            //$this->setAction('check');
         }
         $this->Flash->error(__('The cart could not be saved. Please, try again.'));
-    
     }
+
     public function checkOrder(){
-        //$this->autoRender = false;
-        //echo "Here is /Carts/checkOrder ------- " . $userName . "<br/>";    
-        //$userId = $this->Session->read('userId');
         $userId = $this->Auth->user('id');
         $query = $this->Carts->find()
             ->where(['user_id' => $userId])
             ->where(['orderd' => 1]);
         $query->contain(['Users', 'Products']);    
-        //debug($query->toList());
-
         if($query->isEmpty()){
-            $this->Flash->error(__('注文する商品を選んでください'));
+            //$this->Flash->error(__('注文する商品を選んでください'));
             return $this->redirect(['controller' => 'Carts', 'action' => 'check_cart']);
         }
-
         $carts = $this->paginate($query);
         //debug($carts);
         $this->set(compact('carts'));
-
-    }
-
-    public function checkCart(){
-        //$this->autoRender = false;
-        //echo "Here is /Carts/check ------- " . $userName . "<br/>";
-        //$userId = $this->Session->read('userId');
-        $userId = $this->Auth->user('id');
-        //debug($userId);
-        $this->paginate = [
-            'contain' => ['Users', 'Products'],
-        ];
-        $query = $this->Carts->find()
-            ->where(['user_id' => $userId])
-            ->where(['orderd' => 0]);
-        //debug($query);
-        $carts = $this->paginate($query);
-        
-        $this->set(compact('carts'));
-    }
-
-    public function order($cartId = null){
-         
-        $this->autoRender = false;
-        //$userId = $this->Session->read('userId');
-        $userId = $this->Auth->user('id');
-        //$userName = $this->Session->read('userName');
-        $userName = $this->Auth->user('uname');
-        echo "Here is /Carts/order ------- " . $userName . "<br/>";
-       $cart = $this->Carts->get($cartId);
-         $cart->orderd = 1;
-        // save cart record to cartsTable
-        if ($this->Carts->save($cart)) {    
-            //$this->Flash->success(__('Here is /Carts/order --- cartId : ' . $cartId . 'was saved.'));
-            return $this->redirect(['controller' => 'Carts', 'action' => 'check_cart']); 
-            //$this->setAction('check');
-
-        }
-        $this->Flash->error(__('The cart could not be saved. Please, try again.'));
-        
     }
 
     public function delCart($id = null)
@@ -98,30 +69,49 @@ class CartsController extends AppController
         } else {
             $this->Flash->error(__('The cart could not be deleted. Please, try again.'));
         }
-
         return $this->redirect(['action' => 'checkCart']);
+    }
+
+    public function order($cartId = null)
+    {
+        //$userId = $this->Auth->user('id');
+        $userName = $this->Auth->user('uname');
+        $cart = $this->Carts->get($cartId);
+        $cart->orderd = 1;
+        // save cart record to cartsTable
+        if ($this->Carts->save($cart)) {    
+            $this->Flash->success(__('Here is /Carts/order --- cartId : ' . $cartId . 'was saved.'));
+            return $this->redirect(['controller' => 'Carts', 'action' => 'check_cart']); 
+            //$this->setAction('checkCart');
+        }
+        $this->Flash->error(__('The cart could not be saved. Please, try again.'));   
+    }
+
+    public function checkCart(){
+        $this->paginate = [
+            'contain' => ['Users', 'Products'],
+        ];        
+        $query = $this->Carts->find()
+            ->where(['user_id' => $this->Auth->user('id')])
+            ->where(['orderd' => 0]);
+        $carts = $this->paginate($query);
+        $this->set(compact('carts'));
     }
 
     public function intoCart($productId = null)
     {
-        // get user info from session
+        // get user info from Auth->user()
         $this->autoRender =false;
-        //$userId = $this->Session->read('userId');
-        $userId = $this->Auth->user('id');
-        //$userName = $this->Session->read('userName');
-        $userName = $this->Auth->user('uname');
+        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $product = $productsTable->get($productId);
         // create cart record 
         $cart = $this->Carts->newEntity();
-        $cart->user_id = $userId;
-        $cart->product_id = $productId;
+        $cart->user_id = $this->Auth->user('id');
+        $cart->product_id = $product->id;
         $cart->size = 1;
-        echo "here is /carts/intoCart" . "<br/>";
-        echo "user_id: $cart->user_id" . "<br/>";
-        echo "product_id: $cart->product_id" . "<br/>";
-        echo "size: $cart->size" . "<br/>";
         // save cart record to cartsTable
         if ($this->Carts->save($cart)) {
-            $this->Flash->success(__('Here is /Carts/save --- productName : ' . $this->Session->read('productName') . 'was saved.')); 
+            $this->Flash->success(__('Here is /Carts/save --- productName : ' . $product->pname . 'was saved.')); 
             return $this->redirect(['controller' => 'Products', 'action' => 'select']);
         }
         $this->Flash->error(__('The cart could not be saved. Please, try again.'));
@@ -138,7 +128,6 @@ class CartsController extends AppController
             'contain' => ['Users', 'Products'],
         ];
         $carts = $this->paginate($this->Carts);
-
         $this->set(compact('carts'));
     }
 
@@ -154,7 +143,6 @@ class CartsController extends AppController
         $cart = $this->Carts->get($id, [
             'contain' => ['Users', 'Products'],
         ]);
-
         $this->set('cart', $cart);
     }
 
@@ -177,8 +165,7 @@ class CartsController extends AppController
         }
         $users = $this->Carts->Users->find('list', ['limit' => 200]);
         $products = $this->Carts->Products->find('list', ['limit' => 200]);
-        $this->set(compact('cart', 'users', 'products'));
-        
+        $this->set(compact('cart', 'users', 'products'));    
     }
 
     /**
@@ -197,7 +184,6 @@ class CartsController extends AppController
             $cart = $this->Carts->patchEntity($cart, $this->request->getData());
             if ($this->Carts->save($cart)) {
                 $this->Flash->success(__('The cart has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The cart could not be saved. Please, try again.'));
@@ -223,7 +209,6 @@ class CartsController extends AppController
         } else {
             $this->Flash->error(__('The cart could not be deleted. Please, try again.'));
         }
-
         return $this->redirect(['action' => 'index']);
     }
 }
