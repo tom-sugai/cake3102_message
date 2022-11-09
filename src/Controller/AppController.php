@@ -47,7 +47,6 @@ class AppController extends Controller
         
         $this->loadComponent('Flash');
 
-<<<<<<< HEAD
         $this->loadComponent('Auth', [
             // コントローラーで isAuthorized を使用します
             'authorize' => ['Controller'],
@@ -71,9 +70,6 @@ class AppController extends Controller
             // 未認証の場合、直前のページに戻します
             'unauthorizedRedirect' => $this->referer()
         ]);
-=======
-        $this->Session = $this->request->getSession();
->>>>>>> e3374274f81f57909bcb61b975c72846e2c192e9
 
         // display アクションを許可して、PagesController が引き続き
         // 動作するようにします。また、読み取り専用のアクションを有効にします。
