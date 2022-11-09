@@ -30,11 +30,12 @@ class SmailController extends AppController
         */
 
         // create email instans
-        $email = new Email();
+        //$email = new Email();
+        $email = new Email('default');
         // create DebugTransport
-        $transport = new DebugTransport();
+        //$transport = new DebugTransport();
         // set Transport
-        $email->setTransport($transport);
+        //$email->setTransport($transport);
         /** 
         $result = $email->setFrom(['me@example.com' => 'My Site'])
             ->setTo('you@example.com')
@@ -50,9 +51,10 @@ class SmailController extends AppController
         $result = $email
             ->setTemplate('default', 'default') // 'view template' 'layout template'
             ->emailFormat('html')
-            ->to('bob@example.com')
-            ->from('app@domain.com')
-            ->send();
+            ->to('fumiko@svr.home.com')
+            ->from('fumiko@svr.home.com')
+            ->subject('Hello 4 !!')
+            ->send('<h3>Hello Fumiko How are you ?</h3>');
         debug($result);
 
     }
