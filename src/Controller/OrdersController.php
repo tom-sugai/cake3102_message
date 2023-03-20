@@ -3,6 +3,10 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Event\Event;
+use Cake\Event\EventManager;
+//use App\Event\NotificationListener;
+use App\Controller\NotificationListener;
 
 /**
  * Orders Controller
@@ -16,6 +20,10 @@ class OrdersController extends AppController
     public function initialize()
     {
         parent::initialize();
+
+        $this->Notification = new NotificationListener();
+        EventManager::instance()->attach($this->Notification);
+
         $this->Auth->allow(['index']);       
     }
 
@@ -35,7 +43,12 @@ class OrdersController extends AppController
         $order = $this->Orders->get($id, [
             'contain' => ['Users', 'Details.Products'],
         ]);
-        $this->set(compact('order'));        
+        $this->set(compact('order'));
+        //debug($order);
+        // put here Event dispatch program
+        $message = "Thank you for Order from shop";
+        $event = new Event('Notification.E-Mail',$this,['message' => $message, 'order' => $order]);
+        $this->getEventManager()->dispatch($event);        
     }
 
     public function fixOrder(){
@@ -73,7 +86,7 @@ class OrdersController extends AppController
                 // clean carts table( delete orderd cart record from carts table ) 
                 foreach($query as $orderItem){
                     $cartsTable->delete($orderItem);
-                }    
+                }
                 return $this->redirect(['action' => 'confirm', $order->id]);
             } else {
                 $this->Flash->error(__( 'The order could not be saved. Please, try again.'));
