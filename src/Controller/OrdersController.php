@@ -5,8 +5,7 @@ use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
-//use App\Event\NotificationListener;
-use App\Controller\NotificationListener;
+use App\Event\NotificationListener;
 
 /**
  * Orders Controller
@@ -45,7 +44,8 @@ class OrdersController extends AppController
         ]);
         $this->set(compact('order'));
         //debug($order);
-        // put here Event dispatch program
+
+        /** put here Event dispatch program */
         $message = "Thank you for Order from shop";
         $event = new Event('Notification.E-Mail',$this,['message' => $message, 'order' => $order]);
         $this->getEventManager()->dispatch($event);        
