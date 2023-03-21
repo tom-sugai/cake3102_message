@@ -4,7 +4,6 @@ namespace App\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Controller\ComponentRegistry;
 use App\Controller\Component\SendMailComponent;
-//use Cake\Mailer\Email;
 
 /**
  * Class NotificationListener
