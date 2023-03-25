@@ -269,7 +269,8 @@ return [
     'Datasources' => [
         'default' => [
             'className' => Connection::class,
-            'driver' => Sqlite::class,
+            //'driver' => Sqlite::class,
+            'driver' => 'Cake\Database\Driver\Sqlite',
             'persistent' => false,
             'host' => 'localhost',
             /*
