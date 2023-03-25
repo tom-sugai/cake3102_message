@@ -184,7 +184,7 @@ class CartsController extends AppController
             $cart = $this->Carts->patchEntity($cart, $this->request->getData());
             if ($this->Carts->save($cart)) {
                 $this->Flash->success(__('The cart has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'check_order']);
             }
             $this->Flash->error(__('The cart could not be saved. Please, try again.'));
         }
