@@ -47,9 +47,9 @@ class CartsController extends AppController
 
     public function checkOrder(){
         $userId = $this->Auth->user('id');
-        $query = $this->Carts->find()
+        $query = $this->Carts->find()->contain(['Products'])
             ->where(['user_id' => $userId])
-            ->where(['orderd' => true]);
+            ->where(['orderd' => 1]);
         $carts = $this->paginate($query);
         //debug($carts);
         $this->set(compact('carts'));
@@ -85,14 +85,18 @@ class CartsController extends AppController
     public function checkCart(){
         //$this->autoRender = false;
         //echo "Here is /Carts/check ------- " . $userName . "<br/>";
-        $userId = $this->Session->read('userId');
+        $userId = $this->Auth->user('id');
+        //debug($userId);
+        //$userId = $this->Session->read('userId');
 
         $this->paginate = [
             'contain' => ['Users', 'Products'],
-        ];        
+        ];
+
         $query = $this->Carts->find()
             ->where(['user_id' => $userId])
-            ->where(['orderd' => false]);
+            ->where(['orderd' => 0]);
+
         $carts = $this->paginate($query);
         $this->set(compact('carts'));
     }
