@@ -3,6 +3,9 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Event\Event;
+use Cake\Event\EventManager;
+use App\Event\NotificationListener;
 
 /**
  * Orders Controller
@@ -13,63 +16,77 @@ use Cake\ORM\TableRegistry;
  */
 class OrdersController extends AppController
 {
-    public function confirm($id = null){
-        //$this->autoRender = false;
-        $userName = $this->Session->read('userName');
-        $userId = $this->Session->read('userId');
+    public function initialize()
+    {
+        parent::initialize();
 
+        $this->Notification = new NotificationListener();
+        EventManager::instance()->attach($this->Notification);
+
+        $this->Auth->allow(['index']);       
+    }
+
+    public function isAuthorized($user)
+    {
+        $action = $this->request->getParam('action');
+        // intoCart および checkCart アクションは、常にログインしているユーザーに許可されます。
+        if (in_array($action, ['fixOrder', 'confirm'])) {
+            return true;
+        }
+    }
+
+    public function confirm($id = null){
+        $this->paginate = [
+            'contain' => ['Users', 'Details.Products'],
+        ];
         $order = $this->Orders->get($id, [
             'contain' => ['Users', 'Details.Products'],
         ]);
+        $this->set(compact('order'));
+        //debug($order);
 
-        $this->set('order', $order);
-            
+        /** put here Event dispatch program */
+        $message = "Thank you for Order from shop";
+        $event = new Event('Notification.E-Mail',$this,['message' => $message, 'order' => $order]);
+        $this->getEventManager()->dispatch($event);        
     }
 
     public function fixOrder(){
-        //$this->autoRender = false;
-        $userName = $this->Session->read('userName');
-        $userId = $this->Session->read('userId');
-
-        $this->Flash->success(__("Here is /Orders/fixOrder ------- " . $userName));
+        $userId = $this->Auth->user('id');
+        //$userName = $this->Auth->user('uname');
         $this->paginate = [
             'contain' => ['Users','Products'],
         ];
-         
         $cartsTable = TableRegistry::getTableLocator()->get('Carts');
         $query = $cartsTable->find()
             ->where(['user_id' => $userId])
-            ->where(['orderd' => true]);
-
+            ->where(['orderd' => 1]);
+        $query->contain(['Users', 'Products']);
         $carts = $this->paginate($query);
-        //$this->set('carts',$carts);
         $this->set(compact('carts'));
 
         // step1 check orderItem and make detail entity list
         $details = [];
         foreach($query as $orderItem){
             $detail = $this->Orders->Details->newEntity();
-            //$detail->user_id = $orderItem->user_id;
             $detail->product_id = $orderItem->product_id;
             $detail->size = $orderItem->size;
             $details[] = $detail;
         }
-        // step2 save order
+
+        // step2 save order with details
         $order = $this->Orders->newEntity();
         $order->user_id = $userId;
         $order->details = $details;
-        $this->set('order',$order);
-        $this->Flash->success(__("Here is /Orders/fixOrder step-2 ------- " . $userName));
-
+        $this->set('order',$order);;
         if ($this->request->is('post')) {
             $order = $this->Orders->patchEntity($order, $this->request->getData());
             // save order record to ordersTable              
-            if ($this->Orders->save($order)) {
-                $this->Flash->success(__('The order has been saved.--- /Orders/fixOrder ' . $order->id));
+            if ($this->Orders->save($order)) {;
                 // clean carts table( delete orderd cart record from carts table ) 
                 foreach($query as $orderItem){
                     $cartsTable->delete($orderItem);
-                }    
+                }
                 return $this->redirect(['action' => 'confirm', $order->id]);
             } else {
                 $this->Flash->error(__( 'The order could not be saved. Please, try again.'));

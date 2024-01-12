@@ -20,6 +20,7 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('image') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('pname') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('price') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
@@ -31,9 +32,9 @@
             <?php foreach ($products as $product): ?>
             <tr>
                 <td><?= $this->Number->format($product->id) ?></td>
+                <td><?= $this->Html->image($product->image, array('height' => 100, 'width' => 100)) ?></td>
                 <td><?= h($product->pname) ?></td>
                 <td><?= $this->Number->format($product->price) ?></td>
-                <td><?= $this->Html->image($product->image, array('height' => 100, 'width' => 100)) ?></td>
                 <td><?= h($product->created) ?></td>
                 <td><?= h($product->modified) ?></td>
                 <td class="actions">

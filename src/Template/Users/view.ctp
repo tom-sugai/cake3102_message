@@ -21,22 +21,38 @@
     <h3><?= h($user->id) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th scope="row"><?= __('Uname') ?></th>
-            <td><?= h($user->uname) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($user->id) ?></td>
         </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($user->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($user->modified) ?></td>
-        </tr>
     </table>
+    <div class="row">
+        <h4><?= __('Uname') ?></h4>
+        <?= $this->Text->autoParagraph(h($user->uname)); ?>
+    </div>
+    <div class="row">
+        <h4><?= __('Username') ?></h4>
+        <?= $this->Text->autoParagraph(h($user->username)); ?>
+    </div>
+    <div class="row">
+        <h4><?= __('Email') ?></h4>
+        <?= $this->Text->autoParagraph(h($user->email)); ?>
+    </div>
+    <div class="row">
+        <h4><?= __('Password') ?></h4>
+        <?= $this->Text->autoParagraph(h($user->password)); ?>
+    </div>
+    <div class="row">
+        <h4><?= __('Role') ?></h4>
+        <?= $this->Text->autoParagraph(h($user->role)); ?>
+    </div>
+    <div class="row">
+        <h4><?= __('Created') ?></h4>
+        <?= $this->Text->autoParagraph(h($user->created)); ?>
+    </div>
+    <div class="row">
+        <h4><?= __('Modified') ?></h4>
+        <?= $this->Text->autoParagraph(h($user->modified)); ?>
+    </div>
     <div class="related">
         <h4><?= __('Related Carts') ?></h4>
         <?php if (!empty($user->carts)): ?>
@@ -46,6 +62,7 @@
                 <th scope="col"><?= __('User Id') ?></th>
                 <th scope="col"><?= __('Product Id') ?></th>
                 <th scope="col"><?= __('Size') ?></th>
+                <th scope="col"><?= __('Orderd') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -56,6 +73,7 @@
                 <td><?= h($carts->user_id) ?></td>
                 <td><?= h($carts->product_id) ?></td>
                 <td><?= h($carts->size) ?></td>
+                <td><?= h($carts->orderd) ?></td>
                 <td><?= h($carts->created) ?></td>
                 <td><?= h($carts->modified) ?></td>
                 <td class="actions">

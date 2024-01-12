@@ -44,12 +44,9 @@ class UsersTable extends Table
         $this->hasMany('Carts', [
             'foreignKey' => 'user_id',
         ]);
-      
         $this->hasMany('Orders', [
             'foreignKey' => 'user_id',
         ]);
-        
-        
     }
 
     /**
@@ -66,10 +63,40 @@ class UsersTable extends Table
 
         $validator
             ->scalar('uname')
-            ->maxLength('uname', 50)
             ->requirePresence('uname', 'create')
             ->notEmptyString('uname');
 
+        $validator
+            ->scalar('username')
+            ->allowEmptyString('username');
+
+        $validator
+            ->email('email')
+            ->allowEmptyString('email');
+
+        $validator
+            ->scalar('password')
+            ->allowEmptyString('password');
+
+        $validator
+            ->scalar('role')
+            ->allowEmptyString('role');
+
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['username']));
+        $rules->add($rules->isUnique(['email']));
+
+        return $rules;
     }
 }

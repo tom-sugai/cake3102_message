@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Entity;
 
+use Cake\Auth\DefaultPasswordHasher; // この行を追加
 use Cake\ORM\Entity;
 
 /**
@@ -8,8 +9,12 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $uname
- * @property \Cake\I18n\FrozenTime|null $created
- * @property \Cake\I18n\FrozenTime|null $modified
+ * @property string|null $username
+ * @property string|null $email
+ * @property string|null $password
+ * @property string|null $role
+ * @property string|null $created
+ * @property string|null $modified
  *
  * @property \App\Model\Entity\Cart[] $carts
  * @property \App\Model\Entity\Order[] $orders
@@ -27,9 +32,30 @@ class User extends Entity
      */
     protected $_accessible = [
         'uname' => true,
+        'username' => true,
+        'email' => true,
+        'password' => true,
+        'role' => true,
         'created' => true,
         'modified' => true,
-        'carts' => true,
-        'orders' => true,
     ];
+
+    /**
+     * Fields that are excluded from JSON versions of the entity.
+     *
+     * @var array
+     */
+    protected $_hidden = [
+        'password',
+    ];
+
+    // パスワードハッシュ化を追加
+    protected function _setPassword($value)
+    {
+        if (strlen($value)) {
+            $hasher = new DefaultPasswordHasher();
+
+            return $hasher->hash($value);
+        }
+    }
 }

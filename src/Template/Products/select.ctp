@@ -24,6 +24,7 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('image') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('pname') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('price') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
@@ -41,8 +42,7 @@
                 <td><?= h($product->created) ?></td>
                 <td><?= h($product->modified) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link('カートに入れる', ['controller'=> 'Products', 'action' => 'into_cart', $product->id]) ?>
-
+                    <?= $this->Html->link('カートに入れる', ['controller'=> 'Carts', 'action' => 'into_cart', $product->id]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

@@ -6,6 +6,8 @@ use Cake\Database\Driver\Mysql;
 use Cake\Error\ExceptionRenderer;
 use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Transport\MailTransport;
+use Cake\Mailer\Transport\SmtpTransport;
+
 
 return [
     /*
@@ -51,7 +53,8 @@ return [
         'namespace' => 'App',
         'encoding' => env('APP_ENCODING', 'UTF-8'),
         'defaultLocale' => env('APP_DEFAULT_LOCALE', 'en_US'),
-        'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'UTC'),
+        //'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'UTC'),
+        'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'Asia/Tokyo'),
         'base' => false,
         'dir' => 'src',
         'webroot' => 'webroot',
@@ -100,6 +103,7 @@ return [
             'className' => FileEngine::class,
             'path' => CACHE,
             'url' => env('CACHE_DEFAULT_URL', null),
+            //'mask' => 777,
         ],
 
         /*
@@ -115,6 +119,7 @@ return [
             'serialize' => true,
             'duration' => '+1 years',
             'url' => env('CACHE_CAKECORE_URL', null),
+            //'mask' => 777,
         ],
 
         /*
@@ -130,6 +135,7 @@ return [
             'serialize' => true,
             'duration' => '+1 years',
             'url' => env('CACHE_CAKEMODEL_URL', null),
+            //'mask' => 777,
         ],
 
         /*
@@ -177,7 +183,8 @@ return [
      *   breathing room to complete logging or error handling.
      */
     'Error' => [
-        'errorLevel' => E_ALL,
+        //'errorLevel' => E_ALL,
+        'errorLevel' => E_ALL & ~E_USER_DEPRECATED,
         'exceptionRenderer' => ExceptionRenderer::class,
         'skipLog' => [],
         'log' => true,
@@ -205,7 +212,8 @@ return [
      */
     'EmailTransport' => [
         'default' => [
-            'className' => MailTransport::class,
+            //'className' => MailTransport::class,
+            'className' => SmtpTransport::class,
             /*
              * The keys host, port, timeout, username, password, client and tls
              * are used in SMTP transports
@@ -280,7 +288,8 @@ return [
              * You do not need to set this flag to use full utf-8 encoding (internal default since CakePHP 3.6).
              */
             //'encoding' => 'utf8mb4',
-            'timezone' => 'UTC',
+            //'timezone' => 'UTC',
+            'timezone' => 'Asia/Tokyo',
             'flags' => [],
             'cacheMetadata' => true,
             'log' => false,
@@ -320,7 +329,8 @@ return [
             'password' => 'secret',
             'database' => 'test_myapp',
             //'encoding' => 'utf8mb4',
-            'timezone' => 'UTC',
+            //'timezone' => 'UTC',
+            'timezone' => 'Asia/Tokyo',
             'cacheMetadata' => true,
             'quoteIdentifiers' => false,
             'log' => false,

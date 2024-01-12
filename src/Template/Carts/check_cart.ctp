@@ -14,16 +14,18 @@
         <li><?= $this->Html->link(__('List Products'), ['controller' => 'Products', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Product'), ['controller' => 'Products', 'action' => 'add']) ?></li>
 -->
-        <li><?= $this->Html->link(__('注文を確認する'), ['controller' => 'Carts', 'action' => 'Check_order']) ?></li>
+        <li><?= $this->Html->link(__('注文を確認する'), ['controller' => 'Carts', 'action' => 'check_order']) ?></li>
+        <li><?= $this->Html->link(__('商品選択に戻る'), ['controller' => 'Products', 'action' => 'select']) ?></li>
     </ul>
 </nav>
 <div class="carts index large-9 medium-8 columns content">
-    <h3><?= __('商品を選んで注文してください') ?></h3>
+    <h3><?= __('カートの商品を注文してください') ?></h3>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('product_image') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('product_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('size') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
@@ -36,6 +38,7 @@
             <tr>
                 <td><?= $this->Number->format($cart->id) ?></td>
                 <td><?= $cart->has('user') ? $this->Html->link($cart->user->uname, ['controller' => 'Users', 'action' => 'view', $cart->user->id]) : '' ?></td>
+                <td><?= $this->Html->image($cart->product->image, array('height' => 100, 'width' => 100)) ?></td>
                 <td><?= $cart->has('product') ? $this->Html->link($cart->product->pname, ['controller' => 'Products', 'action' => 'view', $cart->product->id]) : '' ?></td>
                 <td><?= $this->Number->format($cart->size) ?></td>
                 <td><?= h($cart->created) ?></td>
@@ -46,7 +49,8 @@
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $cart->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $cart->id], ['confirm' => __('Are you sure you want to delete # {0}?', $cart->id)]) ?>
             -->
-                    <?= $this->Html->link(__('注文する'), ['action' => 'order', $cart->id]) ?>
+                    <?= $this->Html->link(__('注文する　　'), ['action' => 'order', $cart->id]) ?>
+                    <?= $this->Form->postLink(__('削除する'), ['action' => 'delCart', $cart->id], ['confirm' => __('Are you sure you want to delete # {0}?', $cart->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

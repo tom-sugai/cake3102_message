@@ -14,6 +14,6 @@
             echo $this->Form->control('uname');
         ?>
     </fieldset>
-    <?= $this->Form->button(__('登録済確認')) ?>
+    <?= $this->Form->button(__('登録確認')) ?>
     <?= $this->Form->end() ?>
 </div>
