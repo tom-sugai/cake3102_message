@@ -80,7 +80,7 @@ class OrdersController extends AppController
         $order->details = $details;
         $this->set('order',$order);;
         if ($this->request->is('post')) {
-            $order = $this->Orders->patchEntity($order, $this->request->getData());
+            //$order = $this->Orders->patchEntity($order, $this->request->getData());
             // save order record to ordersTable              
             if ($this->Orders->save($order)) {;
                 // clean carts table( delete orderd cart record from carts table ) 
