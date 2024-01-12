@@ -49,7 +49,7 @@
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $cart->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $cart->id], ['confirm' => __('Are you sure you want to delete # {0}?', $cart->id)]) ?>
             -->
-                    <?= $this->Html->link(__('注文する　　'), ['action' => 'order', $cart->id]) ?>
+                    <?= $this->Html->link(__('注文する'), ['action' => 'order', $cart->id]) ?>
                     <?= $this->Form->postLink(__('削除する'), ['action' => 'delCart', $cart->id], ['confirm' => __('Are you sure you want to delete # {0}?', $cart->id)]) ?>
                 </td>
             </tr>
