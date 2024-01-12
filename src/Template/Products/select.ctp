@@ -35,6 +35,7 @@
             <?php foreach ($products as $product): ?>
             <tr>
                 <td><?= $this->Number->format($product->id) ?></td>
+                <td><?= $this->Html->image($product->image, array('height' => 100, 'width' => 100)) ?></td>
                 <td><?= h($product->pname) ?></td>
                 <td><?= $this->Number->format($product->price) ?></td>
                 <td><?= h($product->created) ?></td>

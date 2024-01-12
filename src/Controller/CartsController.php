@@ -38,7 +38,7 @@ class CartsController extends AppController
         ];
         $query = $this->Carts->find()
             ->where(['user_id' => $userId])
-            ->where(['orderd' => true]);
+            ->where(['orderd' => 1]);
         $carts = $this->paginate($query);
         $this->set(compact('carts'));
 
@@ -48,13 +48,13 @@ class CartsController extends AppController
         //$this->autoRender = false;
         //echo "Here is /Carts/check ------- " . $userName . "<br/>";
         $userId = $this->Session->read('userId');
-
+        debug($userId);
         $this->paginate = [
             'contain' => ['Users', 'Products'],
         ];
         $query = $this->Carts->find()
             ->where(['user_id' => $userId])
-            ->where(['orderd' => false]);
+            ->where(['orderd' => 0]);
         $carts = $this->paginate($query);
 
         $this->set(compact('carts'));

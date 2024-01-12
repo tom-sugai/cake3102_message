@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Error\Debugger;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -32,9 +33,9 @@ class ProductsController extends AppController
         $product = $this->Products->get($id);
         $this->Session->write('productId', $product->id);
         $this->Session->write('productName', $product->pname);
-        //$this->Flash->success(__('Your sellected product is   ' . $product->pname));
+        $this->Flash->success(__('Your sellected product is   ' . $product->pname));
         $userName = $this->Session->read('userName');
-        //$this->Flash->success(__('Your namet is ---  ' . $userName));
+        $this->Flash->success(__('Your namet is ---  ' . $userName));
         return $this->redirect(['controller' => 'Carts', 'action' => 'intoCart', $product->id]);
         $this->setAction('select');
     
@@ -47,7 +48,24 @@ class ProductsController extends AppController
      */
     public function index()
     {
+        $this->autoLayout = true;
+        $this->autoRender = true;
+        //$this->viewBuilder()->setLayout('default');
+
+        // テーブルオブジェクトを取得
+        //$productsTable = TableRegistry::getTableLocator()->get('Products');
+
         $products = $this->paginate($this->Products);
+        /** 
+        $this->paginate = [
+            'contain' => ['Carts', 'Detailes'],
+            'limit' => 10
+        ];
+        */
+
+        //$products = $this->Products->find()->all();
+        //$products = $productsTable->find();
+        //debug($products);
 
         $this->set(compact('products'));
     }

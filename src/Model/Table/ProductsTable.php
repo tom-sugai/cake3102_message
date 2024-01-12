@@ -42,9 +42,11 @@ class ProductsTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->hasMany('Carts', [
+            'class'  => 'className', // ここをclassNameと書くべき！
             'foreignKey' => 'product_id',
         ]);
         $this->hasMany('Details', [
+            'class'  => 'className', // ここをclassNameと書くべき！            
             'foreignKey' => 'product_id',
         ]);
     }
