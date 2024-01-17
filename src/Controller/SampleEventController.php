@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
+use Cake\Mailer\Email;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use App\Event\NotificationListener;
@@ -25,11 +27,14 @@ class SampleEventController extends AppController
 
     public function mail()
     {
+        // prepare contents which will send by email
+        $ordersTable = TableRegistry::getTableLocator()->get('Orders');
+        $order = $ordersTable->get(33, ['contain' => ['Users', 'Details' => 'Products']]);
+        debug($order);
+
         $message = "Happy birthday Fumichan !!";
 
-        $event = new Event('Notification.E-Mail', $this, [
-            'message' => $message
-        ]);
+        $event = new Event('Notification.E-Mail', $this, ['message' => $message, 'order' => $order]);
         $this->getEventManager()->dispatch($event);
     }
 }
