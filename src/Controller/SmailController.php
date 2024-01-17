@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 use Cake\Mailer\Email;
 use Cake\Mailer\Transport\DebugTransport;
 use Cake\Mailer\TransportFactory;
@@ -12,6 +13,11 @@ class SmailController extends AppController
     public function index(){
         $this->autoRender = false;
         echo "Here is EmailController";
+
+        // prepare contents which will send by email
+        $ordersTable = TableRegistry::getTableLocator()->get('Orders');
+        $order = $ordersTable->get(30, ['contain' => ['Users', 'Details' => 'Products']]);
+        debug($order);
 
         // load from config/app_loca.php
         // 一度dropしないと設定できない
@@ -27,11 +33,12 @@ class SmailController extends AppController
         $email->setTransport($transport);
         */ 
 
-        //Email::configTransport('default');
+        // set Transport
         TransportFactory::getConfig('default');
+
+        // create Email
         $email = new Email();
-        //debug($email);
-        //$email->setTransport('default');
+
         // send mail
         $result = $email
             ->setTemplate('welcome', 'default') // 'view template' 'layout template'
@@ -40,9 +47,9 @@ class SmailController extends AppController
             ->setTo('fumiko@svr.home.com')
             ->setFrom('tom@fmva52.home.com')
             ->setSubject('Mail test from Smail controller!!')
-            ->viewVars(['product' => 'きゅうり'])
+            ->viewVars(['order' => $order])
             ->send();
-        debug($result);
+        //debug($result);
 
         // Subjects samples
         /** 
