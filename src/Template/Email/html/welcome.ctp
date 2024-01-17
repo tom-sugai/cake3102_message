@@ -12,9 +12,9 @@
 		    $amount = $uprice * $quantity;
             $total = $total + $amount; 
 		 ?>
-		<?= "金額　" . $amount . "　円" ?><br>
+		<?= "金額 " . $amount . " 円" ?><br>
 <?php endforeach; ?>
 <hr></hr>
-<?= "注文合計　" . $total . "　円" ?><br>
+<?= "注文合計 " . $total . " 円" ?><br>
 <?= $order->note1 ?><br>
 <?= $order->note2 ?><br>
