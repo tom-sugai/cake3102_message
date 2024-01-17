@@ -37,10 +37,11 @@ class OrdersController extends AppController
 
     public function confirm($id = null){
         $this->paginate = [
-            'contain' => ['Users', 'Details.Products'],
+            'contain' => ['Users', 'Details' => 'Product'],
         ];
+
         $order = $this->Orders->get($id, [
-            'contain' => ['Users', 'Details.Products'],
+            'contain' => ['Users', 'Details' => 'Products'],
         ]);
         $this->set(compact('order'));
         //debug($order);
