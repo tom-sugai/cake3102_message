@@ -218,14 +218,17 @@ return [
              * The keys host, port, timeout, username, password, client and tls
              * are used in SMTP transports
              */
-            'host' => 'localhost',
+            //'host' => 'localhost',
+            'host' => 'svr.home.com',
             'port' => 25,
             'timeout' => 30,
             /*
              * It is recommended to set these options through your environment or app_local.php
              */
             //'username' => null,
+            'username' => 'tom',
             //'password' => null,
+            'password' => 'ts0521ts',
             'client' => null,
             'tls' => false,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
@@ -244,7 +247,8 @@ return [
     'Email' => [
         'default' => [
             'transport' => 'default',
-            'from' => 'you@localhost',
+            //'from' => 'you@localhost',
+            'from' => 'tom@svr.home.com',
             /*
              * Will by default be set to config value of App.encoding, if that exists otherwise to UTF-8.
              */
