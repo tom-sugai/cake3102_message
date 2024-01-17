@@ -38,8 +38,8 @@ class SmailController extends AppController
             //->viewBuilder()->setTemplate('default', 'default')
             ->emailFormat('html')
             ->setTo('fumiko@svr.home.com')
-            ->setFrom('tom@lavie.home.com')
-            ->setSubject('Thank you mail')
+            ->setFrom('tom@fmva52.home.com')
+            ->setSubject('Mail test from Smail controller!!')
             ->viewVars(['product' => 'きゅうり'])
             ->send();
         debug($result);
