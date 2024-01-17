@@ -3,7 +3,7 @@
 <?php $total = 0; ?>
 <?php foreach ($order->details as $detail): ?>
 		<?= $detail->product->pname ?>
-		<?php $imgurl = 'src = "http://lavie.home.com/cake3/cake3102_message/webroot/img/' . $detail->product->image . "\""; ?>
+		<?php $imgurl = 'src = "http://fmva52.home.com/cake3/cake3102_message/webroot/img/' . $detail->product->image . "\""; ?>
 		<img <?= $imgurl ?> height="100" width="100" alt=""/>	        
         <?= $detail->product->price ?> * <?= $detail->size ?> ==> 
         <?php
